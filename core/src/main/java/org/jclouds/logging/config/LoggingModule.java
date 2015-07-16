@@ -18,12 +18,9 @@ package org.jclouds.logging.config;
 
 import static com.google.inject.matcher.Matchers.any;
 
-import javax.inject.Singleton;
-
 import org.jclouds.logging.Logger;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
 
 /**
  * Creates a post-injection listener that binds Loggers named the same as the enclosing class.
@@ -35,8 +32,6 @@ public abstract class LoggingModule extends AbstractModule {
       bindListener(any(), new BindLoggersAnnotatedWithResource(createLoggerFactory()));
    }
 
-   @Provides
-   @Singleton
    public abstract Logger.LoggerFactory createLoggerFactory();
 
 }

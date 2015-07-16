@@ -16,17 +16,22 @@
  */
 package org.jclouds.logging.jdk.config;
 
+import javax.inject.Singleton;
+
 import org.jclouds.logging.Logger;
 import org.jclouds.logging.config.LoggingModule;
 import org.jclouds.logging.jdk.JDKLogger;
 
 import com.google.auto.service.AutoService;
+import com.google.inject.Provides;
 
 /**
  * Configures logging of type {@link JDKLogger}
  */
 @AutoService(LoggingModule.class)
 public class JDKLoggingModule extends LoggingModule {
+   @Provides
+   @Singleton
    @Override
    public Logger.LoggerFactory createLoggerFactory() {
        return new JDKLogger.JDKLoggerFactory();

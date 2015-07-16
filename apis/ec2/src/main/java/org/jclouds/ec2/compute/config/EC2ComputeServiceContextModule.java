@@ -27,10 +27,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.jclouds.compute.ComputeServiceContext;
 import org.jclouds.compute.config.BaseComputeServiceContextModule;
 import org.jclouds.compute.domain.Image;
 import org.jclouds.compute.extensions.ImageExtension;
 import org.jclouds.compute.extensions.SecurityGroupExtension;
+import org.jclouds.ec2.compute.EC2ComputeService;
 import org.jclouds.ec2.compute.domain.RegionAndName;
 import org.jclouds.ec2.compute.loaders.RegionAndIdToImage;
 import org.jclouds.ec2.compute.suppliers.RegionAndNameToImageSupplier;
@@ -63,11 +65,11 @@ public class EC2ComputeServiceContextModule extends BaseComputeServiceContextMod
       install(new EC2BindComputeSuppliersByClass());
       super.configure();
    }
-   
+
    protected void installDependencies() {
       install(new EC2ComputeServiceDependenciesModule());
    }
-   
+
    @Override
    protected boolean shouldEagerlyParseImages(Injector injector) {
       // If no owners to query, then will never lookup all images
@@ -116,7 +118,7 @@ public class EC2ComputeServiceContextModule extends BaseComputeServiceContextMod
             };
             return new SetAndThrowAuthorizationExceptionSupplier<Image>(rawSupplier, authException).get();
          }
-         
+
       });
    }
 
@@ -128,12 +130,16 @@ public class EC2ComputeServiceContextModule extends BaseComputeServiceContextMod
          return new String[] {};
       return toArray(Splitter.on(',').split(amiOwners), String.class);
    }
-   
+
+   @Provides
+   @Singleton
    @Override
    protected Optional<ImageExtension> provideImageExtension(Injector i) {
       return Optional.of(i.getInstance(ImageExtension.class));
    }
 
+   @Provides
+   @Singleton
    @Override
    protected Optional<SecurityGroupExtension> provideSecurityGroupExtension(Injector i) {
       return Optional.of(i.getInstance(SecurityGroupExtension.class));

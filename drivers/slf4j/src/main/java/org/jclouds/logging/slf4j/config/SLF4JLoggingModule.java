@@ -16,11 +16,14 @@
  */
 package org.jclouds.logging.slf4j.config;
 
+import javax.inject.Singleton;
+
 import org.jclouds.logging.Logger.LoggerFactory;
 import org.jclouds.logging.config.LoggingModule;
 import org.jclouds.logging.slf4j.SLF4JLogger;
 
 import com.google.auto.service.AutoService;
+import com.google.inject.Provides;
 
 /**
  * Configures logging of type {@link SLF4JLogger}
@@ -28,6 +31,8 @@ import com.google.auto.service.AutoService;
 @AutoService(LoggingModule.class)
 public class SLF4JLoggingModule extends LoggingModule {
 
+    @Provides
+    @Singleton
     @Override
     public LoggerFactory createLoggerFactory() {
 	return new SLF4JLogger.SLF4JLoggerFactory();

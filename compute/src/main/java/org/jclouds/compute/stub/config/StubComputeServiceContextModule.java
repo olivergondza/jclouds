@@ -16,12 +16,16 @@
  */
 package org.jclouds.compute.stub.config;
 
+import javax.inject.Singleton;
+
 import org.jclouds.compute.config.JCloudsNativeComputeServiceAdapterContextModule;
+import org.jclouds.compute.extensions.ImageExtension;
 import org.jclouds.compute.extensions.SecurityGroupExtension;
 import org.jclouds.concurrent.SingleThreaded;
 
 import com.google.common.base.Optional;
 import com.google.inject.Injector;
+import com.google.inject.Provides;
 
 @SingleThreaded
 public class StubComputeServiceContextModule extends JCloudsNativeComputeServiceAdapterContextModule {
@@ -36,6 +40,15 @@ public class StubComputeServiceContextModule extends JCloudsNativeComputeService
       super.configure();
    }
 
+   @Provides
+   @Singleton
+   @Override
+   protected Optional<ImageExtension> provideImageExtension(Injector i) {
+       return super.provideImageExtension(i);
+   }
+   
+   @Provides
+   @Singleton
    @Override
    protected Optional<SecurityGroupExtension> provideSecurityGroupExtension(Injector i) {
       return Optional.of(i.getInstance(SecurityGroupExtension.class));
