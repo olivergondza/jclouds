@@ -25,14 +25,26 @@ import static org.jclouds.googlecomputeengine.config.GoogleComputeEngineProperti
 import static org.jclouds.rest.config.BinderUtils.bindHttpApi;
 import static org.jclouds.util.Predicates2.retry;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.net.URI;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
-
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.base.Supplier;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.collect.ImmutableMap;
+import com.google.inject.Injector;
+import com.google.inject.Provides;
+import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
 import org.jclouds.collect.Memoized;
 import org.jclouds.compute.ComputeService;
 import org.jclouds.compute.ComputeServiceAdapter;
@@ -67,20 +79,6 @@ import org.jclouds.googlecomputeengine.domain.MachineType;
 import org.jclouds.googlecomputeengine.domain.Operation;
 import org.jclouds.location.suppliers.ImplicitLocationSupplier;
 import org.jclouds.location.suppliers.implicit.FirstZone;
-
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.base.Supplier;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.collect.ImmutableMap;
-import com.google.inject.Injector;
-import com.google.inject.Provides;
-import com.google.inject.Scopes;
-import com.google.inject.TypeLiteral;
 
 public final class GoogleComputeEngineServiceContextModule
       extends ComputeServiceAdapterContextModule<Instance, MachineType, Image, Location> {
@@ -120,7 +118,7 @@ public final class GoogleComputeEngineServiceContextModule
 
       bind(new TypeLiteral<Predicate<String>>() {
       }).to(GroupIsEmpty.class);
-
+      
       bind(new TypeLiteral<Function<String, OperatingSystem>>() {
       }).to(ImageNameToOperatingSystem.class);
 
@@ -170,7 +168,7 @@ public final class GoogleComputeEngineServiceContextModule
          }
       }, seconds, SECONDS);
    }
-
+   
    @Override
    protected Map<OsFamily, LoginCredentials> osFamilyToCredentials(Injector injector) {
       // GCE does not enable the 'root' account for ssh access by default, but it will create a privileged
@@ -199,14 +197,11 @@ public final class GoogleComputeEngineServiceContextModule
       return CacheBuilder.newBuilder().build(in);
    }
 
-   @Provides
-   @Singleton
+
    @Override protected Optional<ImageExtension> provideImageExtension(Injector i) {
       return Optional.absent();
    }
 
-   @Provides
-   @Singleton
    @Override protected Optional<SecurityGroupExtension> provideSecurityGroupExtension(Injector i) {
       return Optional.absent();
    }

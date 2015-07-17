@@ -301,8 +301,20 @@ public abstract class BaseComputeServiceContextModule extends AbstractModule {
       };
    }
 
+   @Provides
+   @Singleton
+   public final Optional<ImageExtension> guiceProvideImageExtension(Injector i) {
+       return provideImageExtension(i);
+   }
+
    protected Optional<ImageExtension> provideImageExtension(Injector i) {
       return Optional.absent();
+   }
+
+   @Provides
+   @Singleton
+   protected Optional<SecurityGroupExtension> guiceProvideSecurityGroupExtension(Injector i)
+       return provideSecurityGroupExtension(i);
    }
 
    protected Optional<SecurityGroupExtension> provideSecurityGroupExtension(Injector i) {

@@ -16,13 +16,9 @@
  */
 package org.jclouds.servermanager.compute.config;
 
-import javax.inject.Singleton;
-
 import org.jclouds.compute.ComputeServiceAdapter;
 import org.jclouds.compute.config.ComputeServiceAdapterContextModule;
 import org.jclouds.compute.domain.NodeMetadata;
-import org.jclouds.compute.extensions.ImageExtension;
-import org.jclouds.compute.extensions.SecurityGroupExtension;
 import org.jclouds.domain.Location;
 import org.jclouds.servermanager.Datacenter;
 import org.jclouds.servermanager.Hardware;
@@ -35,9 +31,6 @@ import org.jclouds.servermanager.compute.functions.ServerToNodeMetadata;
 import org.jclouds.servermanager.compute.strategy.ServerManagerComputeServiceAdapter;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.inject.Injector;
-import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
 
 public class ServerManagerComputeServiceContextModule extends
@@ -58,19 +51,5 @@ public class ServerManagerComputeServiceContextModule extends
       }).to(DatacenterToLocation.class);
       // to have the compute service adapter override default locations
       install(new LocationsFromComputeServiceAdapterModule<Server, Hardware, Image, Datacenter>(){});
-   }
-
-   @Provides
-   @Singleton
-   @Override
-   protected Optional<ImageExtension> provideImageExtension(Injector i) {
-      return super.provideImageExtension(i);
-   }
-
-   @Provides
-   @Singleton
-   @Override
-   protected Optional<SecurityGroupExtension> provideSecurityGroupExtension(Injector i) {
-      return super.provideSecurityGroupExtension(i);
    }
 }

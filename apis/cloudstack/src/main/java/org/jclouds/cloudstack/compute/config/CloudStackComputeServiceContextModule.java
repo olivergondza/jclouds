@@ -156,7 +156,7 @@ public class CloudStackComputeServiceContextModule extends
       install(new LocationsFromComputeServiceAdapterModule<VirtualMachine, ServiceOffering, Template, Zone>() {
       });
    }
-
+   
 
    @Override
    protected TemplateOptions provideTemplateOptions(Injector injector, TemplateOptions options) {
@@ -279,15 +279,11 @@ public class CloudStackComputeServiceContextModule extends
          NetworkType.BASIC, new BasicNetworkOptionsConverter());
    }
 
-   @Provides
-   @Singleton
    @Override
    protected Optional<ImageExtension> provideImageExtension(Injector i) {
       return Optional.of(i.getInstance(ImageExtension.class));
    }
 
-   @Provides
-   @Singleton
    @Override
    protected Optional<SecurityGroupExtension> provideSecurityGroupExtension(Injector i) {
       return Optional.of(i.getInstance(SecurityGroupExtension.class));

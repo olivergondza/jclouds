@@ -16,19 +16,13 @@
  */
 package org.jclouds.logging.config;
 
-import javax.inject.Singleton;
-
 import org.jclouds.logging.Logger;
-
-import com.google.inject.Provides;
 
 /**
  * Configures logging of type {@link NullLogger}
  */
 public class NullLoggingModule extends LoggingModule {
 
-   @Provides
-   @Singleton
    public Logger.LoggerFactory createLoggerFactory() {
       return new Logger.LoggerFactory() {
          public Logger getLogger(String category) {

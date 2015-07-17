@@ -281,15 +281,11 @@ public class NovaComputeServiceContextModule extends
       return toPortableImageStatus;
    }
 
-   @Provides
-   @Singleton
    @Override
    protected Optional<ImageExtension> provideImageExtension(Injector i) {
       return Optional.of(i.getInstance(ImageExtension.class));
    }
 
-   @Provides
-   @Singleton
    @Override
    protected Optional<SecurityGroupExtension> provideSecurityGroupExtension(Injector i) {
       return Optional.of(i.getInstance(SecurityGroupExtension.class));

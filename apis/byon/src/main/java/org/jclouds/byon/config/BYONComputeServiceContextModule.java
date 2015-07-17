@@ -19,25 +19,18 @@ package org.jclouds.byon.config;
 import java.io.InputStream;
 import java.net.URI;
 
-import javax.inject.Singleton;
-
 import org.jclouds.byon.internal.BYONComputeServiceAdapter;
 import org.jclouds.byon.suppliers.SupplyFromProviderURIOrNodesProperty;
 import org.jclouds.compute.config.JCloudsNativeComputeServiceAdapterContextModule;
 import org.jclouds.compute.domain.Hardware;
 import org.jclouds.compute.domain.Image;
 import org.jclouds.compute.domain.NodeMetadata;
-import org.jclouds.compute.extensions.ImageExtension;
-import org.jclouds.compute.extensions.SecurityGroupExtension;
 import org.jclouds.concurrent.SingleThreaded;
 import org.jclouds.domain.Location;
 import org.jclouds.location.Provider;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.io.ByteSource;
-import com.google.inject.Injector;
-import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
 
 @SingleThreaded
@@ -57,19 +50,5 @@ public class BYONComputeServiceContextModule extends JCloudsNativeComputeService
       }).to(SupplyFromProviderURIOrNodesProperty.class);
       install(new LocationsFromComputeServiceAdapterModule<NodeMetadata, Hardware, Image, Location>() {
       });
-   }
-
-   @Provides
-   @Singleton
-   @Override
-   protected Optional<ImageExtension> provideImageExtension(Injector i) {
-      return super.provideImageExtension(i);
-   }
-
-   @Provides
-   @Singleton
-   @Override
-   protected Optional<SecurityGroupExtension> provideSecurityGroupExtension(Injector i) {
-      return super.provideSecurityGroupExtension(i);
    }
 }

@@ -16,15 +16,11 @@
  */
 package org.jclouds.glesys.compute.config;
 
-import javax.inject.Singleton;
-
 import org.jclouds.compute.ComputeServiceAdapter;
 import org.jclouds.compute.config.ComputeServiceAdapterContextModule;
 import org.jclouds.compute.domain.Hardware;
 import org.jclouds.compute.domain.NodeMetadata;
 import org.jclouds.compute.domain.OsFamilyVersion64Bit;
-import org.jclouds.compute.extensions.ImageExtension;
-import org.jclouds.compute.extensions.SecurityGroupExtension;
 import org.jclouds.compute.options.TemplateOptions;
 import org.jclouds.domain.Location;
 import org.jclouds.functions.IdentityFunction;
@@ -38,9 +34,6 @@ import org.jclouds.glesys.domain.OSTemplate;
 import org.jclouds.glesys.domain.ServerDetails;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.inject.Injector;
-import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
 
 public class GleSYSComputeServiceContextModule extends
@@ -66,17 +59,4 @@ public class GleSYSComputeServiceContextModule extends
       install(new LocationsFromComputeServiceAdapterModule<ServerDetails, Hardware, OSTemplate, String>(){});
    }
 
-   @Provides
-   @Singleton
-   @Override
-   protected Optional<ImageExtension> provideImageExtension(Injector i) {
-      return super.provideImageExtension(i);
-   }
-
-   @Provides
-   @Singleton
-   @Override
-   protected Optional<SecurityGroupExtension> provideSecurityGroupExtension(Injector i) {
-      return super.provideSecurityGroupExtension(i);
-   }
 }
