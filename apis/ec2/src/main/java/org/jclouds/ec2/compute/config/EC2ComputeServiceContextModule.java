@@ -90,14 +90,14 @@ public class EC2ComputeServiceContextModule extends BaseComputeServiceContextMod
 
    @Provides
    @Singleton
-   protected Supplier<LoadingCache<RegionAndName, ? extends Image>> provideRegionAndNameToImageSupplierCache(
+   protected final Supplier<LoadingCache<RegionAndName, ? extends Image>> provideRegionAndNameToImageSupplierCache(
             final RegionAndNameToImageSupplier supplier) {
       return supplier;
    }
 
    @Provides
    @Singleton
-   protected Supplier<CacheLoader<RegionAndName, Image>> provideRegionAndNameToImageSupplierCacheLoader(
+   protected final Supplier<CacheLoader<RegionAndName, Image>> provideRegionAndNameToImageSupplierCacheLoader(
             final RegionAndIdToImage delegate) {
       return Suppliers.<CacheLoader<RegionAndName, Image>>ofInstance(new CacheLoader<RegionAndName, Image>() {
          private final AtomicReference<AuthorizationException> authException = Atomics.newReference();
@@ -123,7 +123,7 @@ public class EC2ComputeServiceContextModule extends BaseComputeServiceContextMod
    @Provides
    @Singleton
    @Named(PROPERTY_EC2_AMI_OWNERS)
-   String[] amiOwners(@Named(PROPERTY_EC2_AMI_OWNERS) String amiOwners) {
+   String[] final amiOwners(@Named(PROPERTY_EC2_AMI_OWNERS) String amiOwners) {
       if (amiOwners.trim().equals(""))
          return new String[] {};
       return toArray(Splitter.on(',').split(amiOwners), String.class);

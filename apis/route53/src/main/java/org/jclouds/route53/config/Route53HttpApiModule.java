@@ -45,13 +45,13 @@ public class Route53HttpApiModule extends AWSHttpApiModule<Route53Api> {
    
    @Provides
    @TimeStamp
-   protected String provideTimeStamp(DateService dateService) {
+   protected final String provideTimeStamp(DateService dateService) {
       return dateService.rfc1123DateFormat(new Date(System.currentTimeMillis()));
    }
 
    @Provides
    @Singleton
-   RequestSigner provideRequestSigner(RestAuthentication in) {
+   final RequestSigner provideRequestSigner(RestAuthentication in) {
       return in;
    }
 

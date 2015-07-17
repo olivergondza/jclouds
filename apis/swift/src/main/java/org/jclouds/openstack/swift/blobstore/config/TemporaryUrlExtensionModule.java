@@ -79,7 +79,7 @@ public abstract class TemporaryUrlExtensionModule<A extends CommonSwiftClient> e
 
    @Provides
    @TimeStamp
-   protected Long unixEpochTimestampProvider() {
+   protected final Long unixEpochTimestampProvider() {
       return System.currentTimeMillis() / 1000; /* convert to seconds */
    }
 

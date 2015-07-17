@@ -56,7 +56,7 @@ public class AzureBlobHttpApiModule extends HttpApiModule<AzureBlobClient> {
 
    @Provides
    @TimeStamp
-   protected String provideTimeStamp(@TimeStamp Supplier<String> cache) {
+   protected final String provideTimeStamp(@TimeStamp Supplier<String> cache) {
       return cache.get();
    }
 

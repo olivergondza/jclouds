@@ -65,7 +65,7 @@ public class OpenStackAuthenticationModule extends AbstractModule {
    @Provides
    @Singleton
    @Authentication
-   protected Supplier<String> provideAuthenticationTokenCache(final Supplier<AuthenticationResponse> supplier)
+   protected final Supplier<String> provideAuthenticationTokenCache(final Supplier<AuthenticationResponse> supplier)
             throws InterruptedException, ExecutionException, TimeoutException {
       return new Supplier<String>() {
          public String get() {
@@ -97,14 +97,14 @@ public class OpenStackAuthenticationModule extends AbstractModule {
 
    @Provides
    @Singleton
-   public LoadingCache<Credentials, AuthenticationResponse> provideAuthenticationResponseCache(
+   public final LoadingCache<Credentials, AuthenticationResponse> provideAuthenticationResponseCache(
          GetAuthenticationResponse getAuthenticationResponse) {
       return CacheBuilder.newBuilder().expireAfterWrite(23, TimeUnit.HOURS).build(getAuthenticationResponse);
    }
 
    @Provides
    @Singleton
-   protected Supplier<AuthenticationResponse> provideAuthenticationResponseSupplier(
+   protected final Supplier<AuthenticationResponse> provideAuthenticationResponseSupplier(
          final LoadingCache<Credentials, AuthenticationResponse> cache, @Provider final Supplier<Credentials> creds) {
       return new Supplier<AuthenticationResponse>() {
          @Override
@@ -117,7 +117,7 @@ public class OpenStackAuthenticationModule extends AbstractModule {
    @Provides
    @Singleton
    @TimeStamp
-   protected Supplier<Date> provideCacheBusterDate() {
+   protected final Supplier<Date> provideCacheBusterDate() {
       return memoizeWithExpiration(new Supplier<Date>() {
          public Date get() {
             return new Date();

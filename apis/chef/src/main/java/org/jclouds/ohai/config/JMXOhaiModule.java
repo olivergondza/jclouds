@@ -36,7 +36,7 @@ public class JMXOhaiModule extends OhaiModule {
 
    @Provides
    @Singleton
-   protected RuntimeMXBean provideRuntimeMXBean() {
+   protected final RuntimeMXBean provideRuntimeMXBean() {
       return ManagementFactory.getRuntimeMXBean();
    }
 

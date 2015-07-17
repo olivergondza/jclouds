@@ -47,7 +47,7 @@ public class GoGridHttpApiModule extends HttpApiModule<GoGridApi> {
 
    @Provides
    @TimeStamp
-   protected Long provideTimeStamp(@TimeStamp Supplier<Long> cache) {
+   protected final Long provideTimeStamp(@TimeStamp Supplier<Long> cache) {
       return cache.get();
    }
 
@@ -56,7 +56,7 @@ public class GoGridHttpApiModule extends HttpApiModule<GoGridApi> {
     */
    @Provides
    @TimeStamp
-   Supplier<Long> provideTimeStampCache(@Named(PROPERTY_SESSION_INTERVAL) long seconds) {
+   final Supplier<Long> provideTimeStampCache(@Named(PROPERTY_SESSION_INTERVAL) long seconds) {
       return Suppliers.memoizeWithExpiration(new Supplier<Long>() {
          public Long get() {
             return System.currentTimeMillis() / 1000;

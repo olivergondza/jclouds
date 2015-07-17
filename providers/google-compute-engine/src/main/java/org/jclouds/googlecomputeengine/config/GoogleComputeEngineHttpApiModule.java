@@ -79,7 +79,7 @@ public final class GoogleComputeEngineHttpApiModule extends HttpApiModule<Google
       bind(HttpErrorHandler.class).annotatedWith(ServerError.class).to(GoogleComputeEngineErrorHandler.class);
    }
 
-   @Provides @Singleton @CurrentProject Supplier<URI> project(@Named(PROJECT_NAME) final String projectName,
+   @Provides @Singleton @CurrentProject Supplier<URI> final project(@Named(PROJECT_NAME) final String projectName,
          @Provider Supplier<URI> defaultEndpoint, final UseApiToResolveProjectName useApiToResolveProjectName,
          @Provider final Supplier<Credentials> creds, AtomicReference<AuthorizationException> authException,
          @Named(PROPERTY_SESSION_INTERVAL) long seconds) {

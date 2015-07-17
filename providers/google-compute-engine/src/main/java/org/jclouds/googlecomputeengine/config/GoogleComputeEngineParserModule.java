@@ -48,14 +48,14 @@ public final class GoogleComputeEngineParserModule extends AbstractModule {
       bind(GsonModule.DateAdapter.class).to(GsonModule.Iso8601DateAdapter.class);
    }
 
-   @Provides @Singleton Map<Type, Object> typeAdapters() {
+   @Provides @Singleton final Map<Type, Object> typeAdapters() {
       return new ImmutableMap.Builder<Type, Object>()
             .put(FirewallOptions.class, new FirewallOptionsTypeAdapter())
             .put(RouteOptions.class, new RouteOptionsTypeAdapter()).build();
    }
 
    // TODO: change jclouds core to use collaborative set bindings
-   @Provides @Singleton Set<TypeAdapterFactory> typeAdapterFactories() {
+   @Provides @Singleton final Set<TypeAdapterFactory> typeAdapterFactories() {
       return ImmutableSet.<TypeAdapterFactory>of(new ListPageAdapterFactory());
    }
 

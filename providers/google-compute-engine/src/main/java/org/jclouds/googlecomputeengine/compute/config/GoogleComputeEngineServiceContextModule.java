@@ -131,17 +131,17 @@ public final class GoogleComputeEngineServiceContextModule
    }
 
    // TODO: these timeouts need thinking through.
-   @Provides Predicate<AtomicReference<Operation>> operationDone(AtomicOperationDone input,
+   @Provides Predicate<AtomicReference<Operation>> final operationDone(AtomicOperationDone input,
          @Named(OPERATION_COMPLETE_TIMEOUT) long timeout, @Named(OPERATION_COMPLETE_INTERVAL) long interval) {
       return retry(input, timeout, interval, MILLISECONDS);
    }
 
-   @Provides Predicate<AtomicReference<Instance>> instanceVisible(AtomicInstanceVisible input,
+   @Provides Predicate<AtomicReference<Instance>> final instanceVisible(AtomicInstanceVisible input,
          @Named(OPERATION_COMPLETE_TIMEOUT) long timeout, @Named(OPERATION_COMPLETE_INTERVAL) long interval) {
       return retry(input, timeout, interval, MILLISECONDS);
    }
 
-   @Provides @Singleton @Memoized Supplier<Map<URI, Hardware>> hardwareByUri(
+   @Provides @Singleton @Memoized Supplier<Map<URI, Hardware>> final hardwareByUri(
          @Memoized final Supplier<Set<? extends Hardware>> hardwareSupplier,
          @Named(PROPERTY_SESSION_INTERVAL) long seconds) {
       return memoizeWithExpiration(new Supplier<Map<URI, Hardware>>() {
@@ -155,7 +155,7 @@ public final class GoogleComputeEngineServiceContextModule
       }, seconds, SECONDS);
    }
 
-   @Provides @Singleton @Memoized Supplier<Map<URI, Location>> locationsByUri(
+   @Provides @Singleton @Memoized Supplier<Map<URI, Location>> final locationsByUri(
          @Memoized final Supplier<Set<? extends Location>> locations, @Named(PROPERTY_SESSION_INTERVAL) long seconds) {
       return memoizeWithExpiration(new Supplier<Map<URI, Location>>() {
          @Override
@@ -192,7 +192,7 @@ public final class GoogleComputeEngineServiceContextModule
 
    @Provides
    @Singleton
-   protected LoadingCache<URI, Image> diskURIToImageMap(
+   protected final LoadingCache<URI, Image> diskURIToImageMap(
          CacheLoader<URI, Image> in) {
       return CacheBuilder.newBuilder().build(in);
    }
@@ -215,7 +215,7 @@ public final class GoogleComputeEngineServiceContextModule
                      .put(Instance.Status.STOPPED, NodeMetadata.Status.SUSPENDED)
                      .put(Instance.Status.TERMINATED, NodeMetadata.Status.SUSPENDED).build();
 
-   @Provides Map<Instance.Status, NodeMetadata.Status> toPortableNodeStatus() {
+   @Provides final Map<Instance.Status, NodeMetadata.Status> toPortableNodeStatus() {
       return toPortableNodeStatus;
    }
 }
